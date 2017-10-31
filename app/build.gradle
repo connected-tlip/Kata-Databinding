@@ -24,8 +24,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    // Enables databinding
     dataBinding {
         enabled true
+    }
+    // Allows tests to run Log.d without crashing
+    testOptions {
+        unitTests {
+            returnDefaultValues true
+        }
     }
 }
 
