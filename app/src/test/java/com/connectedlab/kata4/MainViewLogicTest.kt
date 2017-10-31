@@ -1,7 +1,5 @@
 package com.connectedlab.kata4
 
-import org.hamcrest.CoreMatchers.equalTo
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito
@@ -39,7 +37,7 @@ class MainViewLogicTest {
 
     /**
      * 3. Click on the button (Button / email_button) calls EmailService.sendEmails (with the
-     * appropriate arguments)
+     * appropriate arguments), and hides the error text if it is shown.
      *
      * Note: You don't need the parameter of buttonClick
      */
