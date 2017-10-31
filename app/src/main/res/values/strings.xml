@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Kata4</string>
+    <string name="how_many_emails">How many emails do you want to receive?</string>
+    <string name="send_emails">Send Emails</string>
+</resources>
