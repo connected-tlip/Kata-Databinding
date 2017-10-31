@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewLogic.errorTextVisible ? View.VISIBLE : View.GONE}"
-                android:text="Invalid Email Address"
+                android:text="@={viewLogic.errorTextValue}"
                 android:textColor="@android:color/holo_red_dark" />
 
             <TextView
@@ -61,6 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
+                android:text="@={viewLogic.numEmailsValue}"
                 android:textSize="16sp"
                 tools:text="50" />
 
@@ -68,6 +69,7 @@
                 android:id="@+id/seek_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:progress="@={viewLogic.seekbarProgress}"
                 android:layout_marginTop="10dp"
                 android:max="100" />
 
@@ -77,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:onClick="@{viewLogic::buttonClick}"
                 android:hint="@string/send_emails" />
 
         </LinearLayout>

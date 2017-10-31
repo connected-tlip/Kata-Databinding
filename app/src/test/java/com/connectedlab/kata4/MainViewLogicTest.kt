@@ -6,13 +6,15 @@ import org.mockito.Mockito
 
 class MainViewLogicTest {
     private lateinit var service: EmailService
+    private lateinit var toastMaker: ToastMaker
     private lateinit var sut: MainViewLogic
 
     @Before
     fun setup() {
         service = Mockito.mock(EmailService::class.java)
+        toastMaker = Mockito.mock(ToastMaker::class.java)
 
-        sut = MainViewLogic(service)
+        sut = MainViewLogic(service, toastMaker)
     }
 
     /**
@@ -21,7 +23,9 @@ class MainViewLogicTest {
      */
     @Test
     fun inputTextValue_givenInvalidEmail_showErrorText() {
-        TODO("Implement me!")
+        sut.inputTextValue.set("not an email address")
+
+        assertThat(sut.errorTextVisible.get(), equalTo(true))
     }
 
     /**
@@ -32,7 +36,9 @@ class MainViewLogicTest {
      */
     @Test
     fun seekbarProgress_displaysToUser() {
-        TODO("Implement me!")
+        sut.seekbarProgress.set(30)
+
+        assertThat(sut.numEmailsValue.get(), equalTo("Number of emails: 30"))
     }
 
     /**
@@ -43,7 +49,12 @@ class MainViewLogicTest {
      */
     @Test
     fun buttonClick_callsSendEmails() {
-        TODO("Implement me!")
+        sut.inputTextValue.set("tlip@connectedlab.com")
+        sut.seekbarProgress.set(60)
+
+        sut.buttonClick(    null)
+
+        Mockito.verify(service).sendEmails("tlip@connectedlab.com", 60, sut)
     }
 
     /**
@@ -52,7 +63,10 @@ class MainViewLogicTest {
      */
     @Test
     fun sendEmails_givenSignupFails_showsErrorText() {
-        TODO("Implement me!")
+        sut.onFailure()
+
+        assertThat(sut.errorTextVisible.get(), equalTo(true))
+        assertThat(sut.errorTextValue.get(), equalTo("Failed to Send - Need > 50 Emails!"))
     }
 
     /**
@@ -61,6 +75,8 @@ class MainViewLogicTest {
      */
     @Test
     fun sendEmails_givenSignupSucceeds_showsToastWithSuccess() {
-        TODO("Implement me!")
+        sut.onSuccess()
+
+        Mockito.verify(toastMaker).makeToast("Success!")
     }
 }
