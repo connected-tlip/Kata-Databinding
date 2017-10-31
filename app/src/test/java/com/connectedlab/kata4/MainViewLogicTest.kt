@@ -1,8 +1,14 @@
 package com.connectedlab.kata4
 
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
+import org.mockito.invocation.InvocationOnMock
+import org.mockito.stubbing.Answer
 
 class MainViewLogicTest {
     private lateinit var service: EmailService
@@ -21,18 +27,22 @@ class MainViewLogicTest {
      */
     @Test
     fun inputTextValue_givenInvalidEmail_showErrorText() {
-        TODO("Implement me!")
+        sut.inputTextValue.set("123")
+        assertTrue(sut.errorTextVisible.get())
+
     }
 
     /**
-     * 2. The seekbar valid is displayed and constantly updated in the textview above it
+     * 2. The seekbar value is displayed and constantly updated in the textview above it
      * (TextView / num_emails_text) in the format: "Number of emails: <value>"
      *
      * Hint: Bind the seekbar android:progress attribute to an ObservableField!
      */
     @Test
     fun seekbarProgress_displaysToUser() {
-        TODO("Implement me!")
+        sut.seekBarValue.set(50)
+
+        assertEquals("Number of emails: 50", sut.emailNumbers.get())
     }
 
     /**
@@ -43,7 +53,11 @@ class MainViewLogicTest {
      */
     @Test
     fun buttonClick_callsSendEmails() {
-        TODO("Implement me!")
+        sut.inputTextValue.set("email text")
+        sut.seekBarValue.set(5)
+        sut.buttonClick(null)
+        Mockito.verify(service).sendEmails("email text", 5, sut)
+
     }
 
     /**
@@ -52,7 +66,17 @@ class MainViewLogicTest {
      */
     @Test
     fun sendEmails_givenSignupFails_showsErrorText() {
-        TODO("Implement me!")
+        sut.inputTextValue.set("email text")
+        sut.seekBarValue.set(5)
+        val answer: Answer<Unit> = Answer { invocation: InvocationOnMock ->
+            (invocation.arguments[2] as EmailService.Callback).onFailure()
+        }
+        Mockito.`when`(service.sendEmails(Mockito.anyString(), Mockito.anyInt(), Mockito.any(EmailService.Callback::class.java))).thenAnswer(answer)
+
+        sut.buttonClick(null)
+
+        assertEquals(true, sut.errorTextVisible.get())
+        assertEquals("Failed to Send - Need > 50 Emails!", sut.errorTextValue.get())
     }
 
     /**

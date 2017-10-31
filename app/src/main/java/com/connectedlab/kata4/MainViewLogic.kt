@@ -7,20 +7,30 @@ import android.view.View
 
 class MainViewLogic(val service: EmailService) : EmailService.Callback {
 
-    companion object {
-        const val TAG = "MainViewLogic"
-    }
-
     val inputTextValue = ObservableField("")
     val errorTextVisible = ObservableField(false)
+    val seekBarValue = ObservableField(0)
+    val emailNumbers = ObservableField("")
+    val errorTextValue = ObservableField("")
 
     init {
         inputTextValue.onChanged { newValue ->
             Log.d(TAG, "Input Text: $newValue")
+            errorTextVisible.set(!newValue.contains("@"))
         }
+
+
+        seekBarValue.onChanged {
+            newValue -> Log.d(TAG, "Progress changed to: $newValue")
+
+            emailNumbers.set("Number of emails: $newValue")
+        }
+
+
     }
 
     fun buttonClick(ignore: View?) {
+        service.sendEmails(inputTextValue.get(), seekBarValue.get(), this)
         Log.d(TAG, "Button Clicked!")
     }
 
@@ -30,8 +40,17 @@ class MainViewLogic(val service: EmailService) : EmailService.Callback {
 
     override fun onFailure() {
         Log.d(TAG, "Failed")
+        errorTextVisible.set(true)
+        errorTextValue.set("Failed to Send - Need > 50 Emails!")
+    }
+
+
+    companion object {
+        const val TAG = "MainViewLogic"
     }
 }
+
+
 
 /**
  * Wraps [ObservableField.addOnPropertyChangedCallback] with a cleaner interface.
