@@ -39,10 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="@{viewLogic.errorTextVisible ? View.VISIBLE : View.GONE}"
+                android:text="Invalid Email Address"
                 android:textColor="@android:color/holo_red_dark" />
 
             <TextView
-                android:id="@+id/label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -67,7 +67,7 @@
 
 
             <Button
-                android:id="@+id/signup_button"
+                android:id="@+id/email_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

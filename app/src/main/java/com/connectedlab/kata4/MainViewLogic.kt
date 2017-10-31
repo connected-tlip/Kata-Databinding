@@ -5,7 +5,7 @@ import android.databinding.ObservableField
 import android.util.Log
 import android.view.View
 
-class MainViewLogic(val service: SignupService) : SignupService.Callback {
+class MainViewLogic(val service: EmailService) : EmailService.Callback {
 
     companion object {
         const val TAG = "MainViewLogic"
@@ -15,12 +15,12 @@ class MainViewLogic(val service: SignupService) : SignupService.Callback {
     val errorTextVisible = ObservableField(false)
 
     init {
-        inputTextValue.onChanged {
-            Log.d(TAG, "Input Text: ${inputTextValue.get()}")
+        inputTextValue.onChanged { newValue ->
+            Log.d(TAG, "Input Text: $newValue")
         }
     }
 
-    fun buttonClick(ignore: View) {
+    fun buttonClick(ignore: View?) {
         Log.d(TAG, "Button Clicked!")
     }
 
