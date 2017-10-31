@@ -20,4 +20,4 @@ Implement each story described in the comments of [MainViewLogicTest](./app/src/
 
 We will use [Mockito](http://site.mockito.org/) for mocking.
 
-Not 3rd party anymore, but we almost make extensive use of the [Android Data-Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html).
+Not 3rd party anymore, but we make extensive use of the [Android Data-Binding Library](https://developer.android.com/topic/libraries/data-binding/index.html).
